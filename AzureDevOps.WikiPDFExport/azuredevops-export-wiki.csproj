@@ -1,11 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+	<RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>azuredevops_export_wiki</RootNamespace>
-    <PublishSingleFile>true</PublishSingleFile>
-    <PublishReadyToRun>true</PublishReadyToRun>
+    <PublishSingleFile>false</PublishSingleFile>
+    <PublishReadyToRun>false</PublishReadyToRun>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,10 +14,26 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <TargetPath>licenses.txt</TargetPath>
     </ContentWithTargetPath>
-    <Content Include="devopswikistyle.css">
+    
+	<Content Include="devopswikistyle.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <TargetPath>devopswikistyle.css</TargetPath>
     </Content>
+	  
+	<Content Include="HTML\footer.html">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<TargetPath>footer.html</TargetPath>
+	</Content>
+
+	<Content Include="HTML\header.html">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<TargetPath>header.html</TargetPath>
+	</Content>
+
+	<Content Include="HTML\front.html">
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<TargetPath>front.html</TargetPath>
+	</Content>
   </ItemGroup>
 
   <ItemGroup>

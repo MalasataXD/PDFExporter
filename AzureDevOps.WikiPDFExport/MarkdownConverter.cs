@@ -35,7 +35,22 @@ namespace azuredevops_export_wiki
         internal string ConvertToHTML(IList<MarkdownFile> files)
         {
             Log("Converting Markdown to HTML");
+            
             StringBuilder sb = new();
+
+            // Add this block to prepend the content of front.html
+            string frontHtmlPath = "./front.html"; // Update this path as needed
+            if (File.Exists(frontHtmlPath))
+            {
+                string frontHtmlContent = File.ReadAllText(frontHtmlPath);
+                sb.Append(frontHtmlContent);
+            }
+            else
+            {
+                Log($"File {frontHtmlPath} not found!", LogLevel.Warning);
+            }
+
+
 
             //setup the markdown pipeline to support tables
             var pipelineBuilder = new MarkdownPipelineBuilder()
@@ -96,6 +111,18 @@ namespace azuredevops_export_wiki
                     Log($"File {file.FullName} is empty and will be skipped!", LogLevel.Warning, 1);
                     continue;
                 }
+
+                // Header correction — Correct headers that don't have a space after the #
+                var headerCorrectionRegex = new Regex(@"^(#+)(?!\#|\s)", RegexOptions.Multiline);
+                md = headerCorrectionRegex.Replace(md, "$1 ");
+
+                // # Table corection — Correct rows with only separators (1 or 2 dashes)
+                var onlySeparatorsRegex = new Regex(@"^(\|[-]{1,2})+\|$", RegexOptions.Multiline);
+                md = onlySeparatorsRegex.Replace(md, match =>
+                {
+                    int columnCount = match.Value.Count(c => c == '|') - 1;
+                    return "|" + string.Join("|", Enumerable.Repeat("---", columnCount)) + "|";
+                });
 
                 //rename TOC tags to fit to MarkdigToc or delete them from each markdown document
                 var newTOCString = _options.GlobalTOC != null ? "" : "[TOC]";

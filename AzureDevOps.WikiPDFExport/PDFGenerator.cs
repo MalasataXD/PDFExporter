@@ -47,14 +47,19 @@ namespace azuredevops_export_wiki
                 var info = await new BrowserFetcher(fetcherOptions).DownloadAsync(BrowserFetcher.DefaultChromiumRevision);
                 chromePath = info.ExecutablePath;
 
+                _logger.Log($"Chrome Path: {chromePath}");
                 _logger.Log("Chrome ready.");
+            }
+            else
+            {
+                _logger.Log($"Using Chrome at {chromePath}");
             }
 
             var launchOptions = new LaunchOptions
             {
                 ExecutablePath = chromePath,
                 Headless = true, //set to false for easier debugging
-                Args = new[] { "--no-sandbox", "--single-process" }, //required to launch in linux
+                Args = new[] { "--single-process" },// "--no-sandbox", //required to launch in linux
                 Devtools = false,
                 Timeout = _options.ChromeTimeout * 1000
             };
