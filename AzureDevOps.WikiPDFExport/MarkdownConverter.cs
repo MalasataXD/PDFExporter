@@ -39,15 +39,14 @@ namespace azuredevops_export_wiki
             StringBuilder sb = new();
 
             // Add this block to prepend the content of front.html
-            string frontHtmlPath = "./front.html"; // Update this path as needed
-            if (File.Exists(frontHtmlPath))
+            if (File.Exists(_options.FrontPageTemplatePath))
             {
-                string frontHtmlContent = File.ReadAllText(frontHtmlPath);
+                string frontHtmlContent = File.ReadAllText(_options.FrontPageTemplatePath);
                 sb.Append(frontHtmlContent);
             }
             else
             {
-                Log($"File {frontHtmlPath} not found!", LogLevel.Warning);
+                Log($"File {_options.FrontPageTemplatePath} not found!", LogLevel.Warning);
             }
 
 
