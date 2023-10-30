@@ -1,3 +1,6 @@
+# ⚠️ Important
+This is just a fork of the Original Project. This has some specific fixes, that the original doesn't have at the moment.
+
 ## 🏎 Quickstart
 This tool exports an Azure DevOps wiki as PDF. Therefore, you need to git clone the target wiki to a computer. You can get the clone link of the wiki in the top right of the wiki homepage:
 ![Clone a wiki](images/CloneWiki.png)
